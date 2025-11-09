@@ -3,31 +3,14 @@ supabase==2.3.1
 
 # Security scanning tools Python wrappers
 python-nmap==0.7.1
-python-owasp-zap-v2.4==0.0.21
 sslyze==5.2.0
 
-# HTTP clients
+# HTTP clients (httpx version compatible with supabase)
 requests==2.31.0
-httpx==0.26.0
+httpx==0.25.2
 
 # Data validation and parsing
 pydantic==2.5.0
-pydantic-settings==2.1.0
-
-# JSON/XML parsing
-xmltodict==0.13.0
-lxml==5.1.0
-
-# Async support
-asyncio==3.4.3
-aiohttp==3.9.1
-
-# Logging and monitoring
-python-json-logger==2.0.7
-structlog==24.1.0
 
 # Environment management
 python-dotenv==1.0.0
-
-# Date/time handling
-python-dateutil==2.8.2

@@ -1,12 +1,12 @@
-# Supabase client
-supabase==2.3.1
+# Supabase client (upgraded for httpx compatibility)
+supabase==2.9.0
 
 # Security scanning tools Python wrappers
 python-nmap==0.7.1
 
-# HTTP clients (httpx version compatible with supabase)
+# HTTP clients (compatible versions)
 requests==2.31.0
-httpx==0.25.2
+httpx==0.27.0
 
 # Data validation and parsing
 pydantic==2.5.0

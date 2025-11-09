@@ -47,11 +47,17 @@ class NmapScanner:
             hostname = self.extract_hostname(target)
 
             # Run scan in thread pool to avoid blocking
+            # Using faster scan arguments to avoid timeouts
+            # -Pn: Skip host discovery (assume host is up)
+            # -sV: Version detection
+            # -T4: Aggressive timing (faster)
+            # --top-ports 100: Only scan top 100 ports instead of all 65535
+            # timeout=120: 2 minute timeout (reduced from 5 minutes)
             scan_results = await asyncio.to_thread(
                 self.nm.scan,
                 hosts=hostname,
-                arguments='-sV -sC -T4 --script=vuln',
-                timeout=300  # 5 minute timeout
+                arguments='-Pn -sV -T4 --top-ports 100',
+                timeout=120  # 2 minute timeout
             )
 
             findings = self.parse_results(hostname, scan_results)

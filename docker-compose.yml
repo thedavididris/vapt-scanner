@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  vapt-scanner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dara-vapt-scanner
+    restart: unless-stopped
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - LOVABLE_API_KEY=${LOVABLE_API_KEY}
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./scan_outputs:/app/scan_outputs
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - vapt-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  vapt-network:
+    driver: bridge
+
+volumes:
+  scan_outputs:

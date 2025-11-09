@@ -12,6 +12,10 @@ from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 from supabase import create_client, Client
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (for local testing)
+load_dotenv()
 
 # Import tool scanners
 from scanners.nmap_scanner import NmapScanner
@@ -48,10 +52,18 @@ class VAPTScannerService:
 
     def __init__(self):
         """Initialize the scanner service"""
+        # Debug: Print all environment variables to diagnose Railway issue
+        logger.info("Checking environment variables...")
+        logger.info(f"SUPABASE_URL present: {bool(os.getenv('SUPABASE_URL'))}")
+        logger.info(f"SUPABASE_SERVICE_ROLE_KEY present: {bool(os.getenv('SUPABASE_SERVICE_ROLE_KEY'))}")
+
         self.supabase_url = os.getenv('SUPABASE_URL')
         self.supabase_key = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
 
         if not self.supabase_url or not self.supabase_key:
+            # Print actual values (masked) for debugging
+            logger.error(f"SUPABASE_URL: {self.supabase_url[:20] + '...' if self.supabase_url else 'NOT SET'}")
+            logger.error(f"SUPABASE_SERVICE_ROLE_KEY: {'SET (length=' + str(len(self.supabase_key)) + ')' if self.supabase_key else 'NOT SET'}")
             raise ValueError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set")
 
         self.supabase: Client = create_client(self.supabase_url, self.supabase_key)

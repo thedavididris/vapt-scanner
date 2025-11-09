@@ -7,7 +7,7 @@ import logging
 import nmap
 import asyncio
 from datetime import datetime, timezone
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)

@@ -15,10 +15,11 @@ from pydantic import BaseModel, Field
 
 # Import tool scanners
 from scanners.nmap_scanner import NmapScanner
-# from scanners.zap_scanner import ZapScanner  # Disabled - requires Java
-# from scanners.nikto_scanner import NiktoScanner  # Disabled - not in base image
 from scanners.nuclei_scanner import NucleiScanner
-from scanners.sslyze_scanner import SSLyzeScanner
+# Disabled scanners (can add back later):
+# from scanners.zap_scanner import ZapScanner  # Requires Java
+# from scanners.nikto_scanner import NiktoScanner  # Not in base image
+# from scanners.sslyze_scanner import SSLyzeScanner  # Dependency conflicts
 
 # Configure logging
 logging.basicConfig(
@@ -58,10 +59,11 @@ class VAPTScannerService:
         # Initialize scanners (only those installed in Dockerfile)
         self.scanners = {
             'nmap': NmapScanner(),
-            # 'zap': ZapScanner(),  # Disabled - requires Java
-            # 'nikto': NiktoScanner(),  # Disabled - not in base image
-            'nuclei': NucleiScanner(),
-            'sslyze': SSLyzeScanner()
+            'nuclei': NucleiScanner()
+            # Disabled scanners:
+            # 'zap': ZapScanner(),  # Requires Java
+            # 'nikto': NiktoScanner(),  # Not in base image
+            # 'sslyze': SSLyzeScanner()  # Dependency conflicts
         }
 
         logger.info("VAPT Scanner Service initialized successfully")

@@ -15,8 +15,8 @@ from pydantic import BaseModel, Field
 
 # Import tool scanners
 from scanners.nmap_scanner import NmapScanner
-from scanners.zap_scanner import ZapScanner
-from scanners.nikto_scanner import NiktoScanner
+# from scanners.zap_scanner import ZapScanner  # Disabled - requires Java
+# from scanners.nikto_scanner import NiktoScanner  # Disabled - not in base image
 from scanners.nuclei_scanner import NucleiScanner
 from scanners.sslyze_scanner import SSLyzeScanner
 
@@ -55,11 +55,11 @@ class VAPTScannerService:
 
         self.supabase: Client = create_client(self.supabase_url, self.supabase_key)
 
-        # Initialize scanners
+        # Initialize scanners (only those installed in Dockerfile)
         self.scanners = {
             'nmap': NmapScanner(),
-            'zap': ZapScanner(),
-            'nikto': NiktoScanner(),
+            # 'zap': ZapScanner(),  # Disabled - requires Java
+            # 'nikto': NiktoScanner(),  # Disabled - not in base image
             'nuclei': NucleiScanner(),
             'sslyze': SSLyzeScanner()
         }
